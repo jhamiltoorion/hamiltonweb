@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamilton Web LLC | Web-Based Software Development</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            overflow-x: hidden;
+            cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="%23ff00ff" opacity="0.8"/></svg>') 16 16, auto;
+        }
+
+        /* Floating Shapes */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.6;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: #ff00ff;
+            top: -100px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: #00ffff;
+            bottom: 20%;
+            left: -100px;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            background: #ffff00;
+            top: 50%;
+            right: 10%;
+            animation-delay: -10s;
+        }
+
+        .shape-4 {
+            width: 350px;
+            height: 350px;
+            background: #00ff88;
+            bottom: -100px;
+            right: 30%;
+            animation-delay: -15s;
+        }
+
+        /* Spiderweb Background */
+        .spiderweb {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.15;
+        }
+
+        .spiderweb svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            25% { transform: translate(50px, -50px) rotate(90deg) scale(1.1); }
+            50% { transform: translate(-30px, 30px) rotate(180deg) scale(0.9); }
+            75% { transform: translate(-50px, -30px) rotate(270deg) scale(1.05); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-radius: 100px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            gap: 3rem;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease infinite;
+            background-size: 200% auto;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            background: white;
+            color: black;
+            transform: scale(1.1) rotate(-2deg);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 5%;
+            background: #0a0a0a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 0.9;
+            text-transform: uppercase;
+        }
+
+        .hero h1 .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero h1 .line:nth-child(1) {
+            animation: slide-in 0.8s ease forwards;
+        }
+
+        .hero h1 .line:nth-child(2) {
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300% auto;
+            animation: slide-in 0.8s ease 0.2s forwards, rainbow 4s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes slide-in {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% center; }
+            100% { background-position: 300% center; }
+        }
+
+        .hero p {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 5%;
+            background: #0a0a0a;
+            color: white;
+            position: relative;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-header h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .contact-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 1.2rem;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0;
+            background: transparent;
+            color: white;
+            font-size: 1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            padding: 1.2rem 3rem;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            color: white;
+            border: none;
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .submit-button:hover {
+            transform: skewX(-5deg) scale(1.02);
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 5%;
+            background: black;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: 'Space Grotesk', sans-serif;
+            border-top: 3px solid;
+            border-image: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00) 1;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                width: 90%;
+                padding: 0.8rem 1.2rem;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 8rem 5% 6rem;
+            }
+
+
+            .shape {
+                opacity: 0.3;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Background Shapes -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+        <div class="shape shape-4"></div>
+    </div>
+
+    <!-- Spiderweb Background -->
+    <div class="spiderweb">
+        <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+            <defs>
+                <linearGradient id="webGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ff00ff"/>
+                    <stop offset="50%" style="stop-color:#00ffff"/>
+                    <stop offset="100%" style="stop-color:#ffff00"/>
+                </linearGradient>
+            </defs>
+            <!-- Radial lines from center -->
+            <g stroke="url(#webGradient)" stroke-width="1.5" fill="none">
+                <!-- Main radial spokes -->
+                <line x1="500" y1="500" x2="500" y2="0"/>
+                <line x1="500" y1="500" x2="750" y2="67"/>
+                <line x1="500" y1="500" x2="933" y2="250"/>
+                <line x1="500" y1="500" x2="1000" y2="500"/>
+                <line x1="500" y1="500" x2="933" y2="750"/>
+                <line x1="500" y1="500" x2="750" y2="933"/>
+                <line x1="500" y1="500" x2="500" y2="1000"/>
+                <line x1="500" y1="500" x2="250" y2="933"/>
+                <line x1="500" y1="500" x2="67" y2="750"/>
+                <line x1="500" y1="500" x2="0" y2="500"/>
+                <line x1="500" y1="500" x2="67" y2="250"/>
+                <line x1="500" y1="500" x2="250" y2="67"/>
+                <!-- Concentric web rings -->
+                <polygon points="500,440 530,455 545,485 545,515 530,545 500,560 470,545 455,515 455,485 470,455"/>
+                <polygon points="500,380 560,410 590,470 590,530 560,590 500,620 440,590 410,530 410,470 440,410"/>
+                <polygon points="500,300 590,345 650,435 650,565 590,655 500,700 410,655 350,565 350,435 410,345"/>
+                <polygon points="500,200 635,265 725,390 725,610 635,735 500,800 365,735 275,610 275,390 365,265"/>
+                <polygon points="500,80 695,170 815,330 815,670 695,830 500,920 305,830 185,670 185,330 305,170"/>
+                <polygon points="500,-60 770,60 920,260 920,740 770,940 500,1060 230,940 80,740 80,260 230,60"/>
+                <!-- Additional spiral threads -->
+                <path d="M500,440 Q515,447 530,455"/>
+                <path d="M530,455 Q540,470 545,485"/>
+                <path d="M545,485 Q545,500 545,515"/>
+                <path d="M545,515 Q540,530 530,545"/>
+                <path d="M530,545 Q515,553 500,560"/>
+                <path d="M500,560 Q485,553 470,545"/>
+                <path d="M470,545 Q460,530 455,515"/>
+                <path d="M455,515 Q455,500 455,485"/>
+                <path d="M455,485 Q460,470 470,455"/>
+                <path d="M470,455 Q485,447 500,440"/>
+            </g>
+        </svg>
+    </div>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo"><span>Hamilton Web</span></div>
+        <ul class="nav-links">
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>
+                <span class="line">Web Software</span>
+                <span class="line">Done Right</span>
+            </h1>
+            <p>A web-based software development company.</p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-header">
+            <h2>Say Hello</h2>
+            <p>Want to reach out? Drop us a message.</p>
+        </div>
+        <div class="contact-container">
+            <form class="contact-form" action="#" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="you@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="What's on your mind?" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Send</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Hamilton Web LLC. All rights reserved.</p>
+    </footer>
+
+    <!-- Smooth Scrolling -->
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
